@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description"
+    content="We introduce the first watermark tailored for diffusion language models (DLMs), achieving >99% TPR with minimal quality impact and robustness comparable to ARLM watermarks, while keeping the detector unchanged." />
+  <meta property="og:title" content="Watermarking Diffusion Language Models" />
+  <meta property="og:description"
+    content="We introduce the first watermark tailored for diffusion language models (DLMs), achieving >99% TPR with minimal quality impact and robustness comparable to ARLM watermarks, while keeping the detector unchanged." />
+  <meta property="og:url" content="https://diffusionlm-watermark.ing" />
+
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="https://diffusionlm-watermark.ing/static/images/main_figure.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <meta name="twitter:title" content="Watermarking Diffusion Language Models">
+  <meta name="twitter:description"
+    content="We introduce the first watermark tailored for diffusion language models (DLMs), achieving >99% TPR with minimal quality impact and robustness comparable to ARLM watermarks, while keeping the detector unchanged.">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="https://diffusionlm-watermark.ing/static/images/main_figure.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords"
+    content="diffusion language models, DLM, watermarking, language model watermark, detection, provenance, NLP">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Watermarking Diffusion Language Models</title>
+  <link rel="icon" type="image/svg+xml" href="static/images/favicon.svg">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-switch.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css"> <!-- our css -->
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/index.js"></script> <!-- our JS -->
+  <!-- Friendly Analytics -->
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(["setExcludedQueryParams", ["_gl","gad_source","wbraid"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="https://app.friendlyanalytics.ch/";
+      _paq.push(['setTrackerUrl', u+'js/tracker.php']);
+      _paq.push(['setSiteId', '370']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'js/tracker.php'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  <!-- End Friendly Analytics Code -->
+</head>
+
+<body>
+
+  <section class="hero is-orange">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h2 class="title publication-title">Watermarking Diffusion Language Models</h2>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">Thibaud Gloaguen</span>,
+              <span class="author-block">Robin Staab</span>,
+              <span class="author-block">Nikola Jovanović</span>,
+              <span class="author-block">Martin Vechev</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+
+                <span class="link-block">
+                  <a href="2509.24368v1.pdf" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="far fa-file-pdf"></i>
+                    </span>
+                    <span>PDF</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2509.24368v1" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://github.com/eth-sri/diffusion-lm-watermark" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-quote-right"></i>
+                    </span>
+                    <span>BibTeX</span>
+                  </a>
+                </span>
+
+              </div> <!-- publications links -->
+            </div> <!-- column for publications links -->
+            <!-- No additional announcement banner for now -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="hero is-light-blue">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-justified tldr">
+            <b>TL;DR</b>:
+            We propose the first watermarking scheme tailored for Diffusion Language Models. Our watermark leverages the existing Red-Green watermark detector and achieves over a 99% true positive rate with minimal impact on text quality, and robustness comparable to established ARLM watermarking schemes.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Method -->
+  <section class="section hero">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Why is watermarking Diffusion LMs challenging?</h2>
+          <div class="content has-text-centered has-text-justified">
+            <figure class="image prior-works left-wrapped">
+              <img src="static/images/arlm_watermark1.svg" alt="Prior works on watermarking LLMs">
+            </figure>
+            <p>
+              With traditional autoregressive language models (ARLMs), most watermarking schemes rely on previously generated tokens (i.e., the context) to decide how to watermark the next token. 
+              For instance, Red-Green watermarks (illustrated here) hash the context to partition the vocabulary into a <span class=" green">green</span> and a <span class="red">red</span> set.
+              Then, the model is biased to sample tokens from the green set.
+              For detection, the watermark detector counts the number of green tokens in a given text, and if this number is significantly higher than random chance, the text is declared watermarked.
+            </p>
+            <div class="is-clearfix"></div>
+            <!-- DLM challenges figure floated right for text wrap -->
+            <figure class="image dlm-challenges right-wrapped">
+              <img src="static/images/arlm_watermark2.svg" alt="Why watermarking Diffusion LMs is challenging">
+            </figure>
+            <p>
+              Diffusion Language Models (DLMs) generate tokens in arbitrary order by iteratively unmasking a sequence of masked tokens (i.e., tokens yet to be generated).
+              Importantly, this means that when generating a given token, other tokens in its context may not yet have been generated.
+              Hence, the watermarking scheme cannot compute the hash of the context to determine the <span class="green">green</span> and <span class="red">red</span> sets.
+              Thus, when generating such tokens, we cannot bias the distribution toward the green set, which weakens the watermark.
+              This means that we need to design a new watermark that can handle masked tokens in the context.
+            </p>
+            <div class="is-clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light-blue">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Our watermark for Diffusion LMs</h2>
+          <div class="content has-text-centered has-text-justified">
+            <figure class="image figure-overview">
+              <img src="static/images/diffusion_watermark.svg" alt="Our watermark for Diffusion LMs">
+            </figure>
+            <p>
+              For every masked token, while we cannot compute its hash, the DLM still provides us with a probability distribution over the vocabulary.  
+              Hence, our key insight is to leverage this distribution over the hashes of the context to determine how much we can bias the distribution.
+            </p>
+            <p>
+              Specifically, as illustrated above, when computing the watermarked distribution for a masked token, we take into account two factors: (i) we apply the existing Red-Green watermark in expectation over the hashes of the context, and (ii) we bias the distribution towards tokens that lead to hashes making other tokens green.
+              While the first term is a natural extension of the Red-Green watermark, the second term is specific to the order-agnostic generation of DLMs and allows making tokens already generated green.
+            </p>
+            <p>
+              Because our watermarking scheme is based on the same idea as the Red-Green watermark, we can use the same watermark detector for detection. 
+              Given a text, the watermark detector counts the number of green tokens in the text and performs a binomial test to determine whether the number of green tokens is significantly higher than random chance. 
+              If this is the case, the text is declared watermarked.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Demo</h2>
+          <div class="content has-text-centered has-text-justified">
+            <p>
+              The demo below shows how the watermarking algorithm transforms the logits distribution of a DLM into a watermarked distribution. 
+              We start with a partially masked sequence (I [?] [?] [?] pizza.). 
+              For each masked token, the DLM returns a distribution over the vocabulary. 
+              Then, we illustrate how our watermarking scheme modifies this distribution using the two terms described above to obtain the watermarked distribution.
+            </p>
+            <figure class="image figure-overview">
+              <video controls muted loop playsinline style="width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.12);">
+                <source src="static/videos/DLM-watermark-highRes.mp4" type="video/mp4">
+                Your browser does not support the video tag. You can download the video
+                <a href="static/videos/DLM-watermark-highRes.mp4">here</a>.
+              </video>
+            </figure>
+            <div class="is-clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light-blue">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Deriving our watermark from theoretical principles</h2>
+          <div class="content has-text-centered has-text-justified">
+            <p>
+              To formalize our watermark algorithm and justify the importance of the two terms in the watermarked distribution, we provide a theoretical analysis of our watermarking scheme.  
+              In particular, we consider watermarking as a constrained optimization problem: the goal of the watermark is to distort the original model probability distribution <i>p</i> (factorized over a sequence of size <i>L</i>) into a distribution <i>q</i> that maximizes the number of green tokens generated without significantly impacting the quality of the generated text.  
+              We denote this expected number of green tokens as <i>J(p)</i>.  
+              As a proxy for text quality, we consider the Kullback–Leibler divergence between the original and watermarked distributions.
+            </p>
+            <figure class="image figure-overview">
+              <img src="static/images/optim_problem.png" alt="Watermarking as a constrained optimization problem" style="width: 40%; height: auto; display: block; margin: 0 auto;">
+            </figure>
+            <figure class="image prior-works left-wrapped" style="width: 50%;">
+              <img src="static/images/algo.svg" alt="DLMs watermarking algorithm" style="width: 100%; height: auto; display: block;">
+            </figure>
+            <p>
+              This optimization problem admits an (almost) closed-form solution: the optimal watermarked distribution <i>q*</i> is obtained by adding to the logits of the original distribution <i>p</i> a term proportional to the gradient of <i>J(p)</i>.
+              The proportionality coefficient <i>δ</i> is a parameter that controls the strength of the watermark.
+              We derive from this result the watermark algorithm described on the left.
+              The remaining technical challenge is to compute <i>J(p)</i> efficiently.
+              We show that, with most hash functions, <i>J(p)</i> can be computed efficiently.
+            </p>
+            <p>
+              With this theoretical approach, however, interpreting how the watermark operates is challenging.
+              Yet, if we look more closely at the gradient of <i>J(p)</i>, we can recover the two terms of our watermarking scheme introduced above.
+              This means that our watermarking scheme is not only intuitively understandable but also theoretically grounded, as it is optimal with respect to our optimization problem!
+            </p>
+            <figure class="image figure-overview">
+              <img src="static/images/equation.svg" alt="Interpretation of our watermark" style="width: 75%; height: auto; display: block; margin: 0 auto;">
+              <figcaption class="figure-caption">
+                <strong>Remarks:</strong>
+                <i>G</i> is a matrix where each entry indicates the color (green or red) of a token given a hash.
+                The vector <i>h</i> is the distribution over the hashes of the context.
+                The function <i>H</i> is the hash function.
+                Lastly, <i>Ω</i> is the random text being generated.
+                The equation is hard to parse at first sight, but it is actually quite intuitive.
+                The first term is indeed the expectation of the color over the hashes of the context.
+                In the second term, we look, for every token in the context of the token being generated, which concrete value (of the token being generated) would yield hashes that make them green, and we weight this by a corresponding probability.
+                Computing this sum "manually" is tedious to implement, but thanks to our theoretical analysis, we can derive it automatically with backpropagation!
+                If we had not performed this theoretical analysis, it would have been difficult to come up with an easy-to-implement algorithm that computes this second term.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results (summary) -->
+  <section class="section hero">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Evaluation of our watermark</h2>
+          <div class="content has-text-centered has-text-justified">
+            <p>
+              We evaluate our watermarking scheme on two DLMs: Llada-8B and Dream-7B, and compare it to a naive adaptation of the Red-Green watermark for DLMs (i.e., applying the Red-Green watermark only when the context is fully unmasked).
+              We find that our watermark is significantly more effective than this naive adaptation, and that, on reasonably small text, it achieves over a 99% true positive rate with minimal impact on text quality!
+            </p>
+            <figure class="image figure-overview">
+              <img src="static/images/eval1.png" alt="Evaluation of our watermark" style="width: 100%; height: auto; display: block; margin: 0 auto;">
+              <figcaption class="figure-caption">
+                <strong>Detection Performance of Our Approach</strong> <em>(Left)</em> We compare the trade-off between watermark detectability (TPR@1) and text quality (log PPL) of our approach and the baseline for different values of the watermark strength parameter δ and sequences averaging 275 tokens on average.
+                <em>(Right)</em> For δ = 4, we compare watermark detectability (TPR@1) between our approach and the baseline as a function of text length.
+                Responses are generated by Llada with a temperature of 0.5 and 600 prompts from WaterBench.
+                Crosses represent shared parameters between both figures.
+              </figcaption>
+            </figure>
+            <p>
+              We also evaluate the robustness of our watermark against various attacks, including text editing (deletion, insertion, substitution), paraphrasing with LLMs, and back-translation.
+              We find that our watermark is comparably robust to established ARLM watermarking schemes.
+            </p>
+            <figure class="image figure-overview">
+              <img src="static/images/eval2.png" alt="Evaluation of our watermark" style="width: 100%; height: auto; display: block; margin: 0 auto;">
+              <figcaption class="figure-caption">
+                <strong>Robustness Evaluation of Our Watermark</strong> <em>(Left)</em> We measure the detectability of our watermark (TPR@1) against an increasing percentage of local modifications, using responses generated from Llada with an average length of 275 tokens.
+                <em>(Right)</em> For stronger adversaries, we measure the detectability of our watermark (TPR@1) with respect to the sequence length.
+                For both figures, we use δ = 4 and the previous token as context.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-5">Citation</h2>
+      <pre id="BibTeX">@misc{gloaguen2025watermarkingdiffusionlanguagemodels,
+      title={Watermarking Diffusion Language Models}, 
+      author={Thibaud Gloaguen and Robin Staab and Nikola Jovanović and Martin Vechev},
+      year={2025},
+      eprint={2509.24368},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2509.24368}, 
+}</pre>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <button class="button is-small" onclick="copyBibtex()">📋 Copy to clipboard</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            Website and project are part of the <b><a href="https://sri.inf.ethz.ch" target="_blank">Secure, Reliable and Intelligent
+                Systems Lab at ETH Zurich</a></b>.
+            <br>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+              target="_blank">Academic Project Page Template</a> and on the basis of <a href="https://watermark-stealing.org/" target="_blank">watermark-stealing.org</a>. 
+              <!-- <a href="https://www.flaticon.com/free-icons/idea" title="idea icons">Idea icons created by Freepik - Flaticon</a> -->
+            <br>
+            <br>
+            <img class="logos" src="static/images/footer.svg" alt="ETH, SRI & LS Logo" style="height: 3em;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
